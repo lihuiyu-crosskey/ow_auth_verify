@@ -36,8 +36,7 @@ elif check=='test':
     redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'db': '1'}
     redis_refresh_token = {'host': '192.168.1.203', 'port': '6379', 'db': '2'}
     redis_user_info = {'host': '192.168.1.203', 'port': '6379', 'db': '3'}
-    test={}
-    a={}
+
 
 
 class Config:
