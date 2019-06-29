@@ -12,30 +12,30 @@ check=os.getenv('FLASK_CONFIG')
 if check=='local':
     access_token_expire = 3600
     refresh_token_expire = 2592000
-    port=2206
+    port=5555
     db_set={'name':'root','password':'ZTkj2018!','host':'192.168.1.203','port':'3306','db':'auth_test'}
-    redis_set={'host':'192.168.1.203','port':'6379','db':'0'}
-    redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'db': '1'}
-    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379', 'db': '2'}
-    redis_user_info = {'host': '192.168.1.203', 'port': '6379', 'db': '3'}
+    redis_set={'host':'192.168.1.203','port':'6379','password':'admin123!','db':'0'}
+    redis_access_token = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '1'}
+    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '2'}
+    redis_user_info = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '3'}
 elif check=='online':
     access_token_expire = 3600
     refresh_token_expire = 2592000
-    port=3306
+    port=5555
     db_set = {'name': 'root', 'password': 'Wushuang2009!', 'host': '149.129.61.116', 'port': '3306', 'db': 'auth_online'}
-    redis_set = {'host': '192.168.1.203', 'port': '6379', 'db': '8'}
-    redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'db': '9'}
-    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379', 'db': '10'}
-    redis_user_info = {'host': '192.168.1.203', 'port': '6379', 'db': '11'}
+    redis_set = {'host': '149.129.61.116', 'port': '6179', 'password': 'admin123!', 'db': '0'}
+    redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'password': 'admin123!', 'db': '1'}
+    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379', 'password': 'admin123!', 'db': '2'}
+    redis_user_info = {'host': '192.168.1.203', 'port': '6379', 'password': 'admin123!', 'db': '3'}
 elif check=='test':
     access_token_expire = 3600
     refresh_token_expire = 2592000
-    port=2206
+    port=5555
     db_set = {'name': 'root', 'password': 'ZTkj2018!', 'host': '192.168.1.203', 'port': '3306', 'db': 'auth_test'}
-    redis_set = {'host': '192.168.1.203', 'port': '6379', 'db': '0'}
-    redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'db': '1'}
-    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379', 'db': '2'}
-    redis_user_info = {'host': '192.168.1.203', 'port': '6379', 'db': '3'}
+    redis_set = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '0'}
+    redis_access_token = {'host': '192.168.1.203', 'port': '6379', 'password':'admin123!','db': '1'}
+    redis_refresh_token = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '2'}
+    redis_user_info = {'host': '192.168.1.203', 'port': '6379','password':'admin123!', 'db': '3'}
 
 
 

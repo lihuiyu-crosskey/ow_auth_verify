@@ -323,9 +323,9 @@ def header_check(head):
                 timestamp = time.time()
                 res={'funkiSystem': funkiSystem,'timestamp': timestamp,'ip':ip}
 
-            Message.mq_send(config.mq_header['routing_key'], res, config.mq_header['user'],
-                            config.mq_header['pwd'],
-                            config.mq_header['url'], config.mq_header['exchange'], config.mq_header['exchange_type'])
+            # Message.mq_send(config.mq_header['routing_key'], res, config.mq_header['user'],
+            #                 config.mq_header['pwd'],
+            #                 config.mq_header['url'], config.mq_header['exchange'], config.mq_header['exchange_type'])
             return True
         else:
             return False
