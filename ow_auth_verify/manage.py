@@ -1,20 +1,29 @@
 # -*- coding:utf-8 -*-
 """
 Module Description:
-Date: 2017-5-3
+Date: 2019-7-19
 Author: lihuiyu
 """
 import os
-from flask_script import Manager, Shell,Server
-from flask_migrate import Migrate, MigrateCommand
 from flask import Flask,request
-from app.models import db
-# from app.models import mail
-from config import config,port
-from app import blue as main_blueprint
-from plugins import http_filter
+from app import beforeLogin,server,logged
+from plugins import http_filter,mydb
 import logging
-import sys
+import redis
+import config
+from flask_cors import *
+import json
+
+
+
+# mail=Mail()
+cur= mydb.Connection(config.db_set['host'] + ":" + config.db_set['port'], config.db_set['db'], config.db_set['name'], config.db_set['password'], 100, 10)
+red = redis.StrictRedis(host=config.redis_set['host'], port=config.redis_set['port'], db=config.redis_set['db'],password=config.redis_set['password'])
+
+
+
+
+
 
 
 def file_handle():
@@ -22,7 +31,7 @@ def file_handle():
     生成一个log handler 用于将日志记录到文件中
     :return:
     """
-    handle = logging.FileHandler(os.path.join(os.path.dirname(__file__), 'logs/auth_verify.log'))
+    handle = logging.FileHandler(os.path.join(os.path.dirname(__file__), 'logs/bug_log.log'))
     formatter = logging.Formatter(
         '-' * 80 + '\n' +
         '%(asctime)s %(levelname)s in %(module)s [%(pathname)s:%(lineno)d]:\n' +
@@ -33,32 +42,53 @@ def file_handle():
     return handle
 
 
+@logged.before_request
+def before():
+    request_url = config.request_url
+    url = request.base_url
+    header = request.headers
+    uid = ''
+    body = request.get_json(silent=True)
+    if body:
+        uid = request.get_json().get("userId", "")
 
-def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
-    db.init_app(app)
-    app.logger.addHandler(file_handle())
-    # mysql.init_app(app)
-    # mail.init_app(app)
-    reload(sys)
-    sys.setdefaultencoding('utf8')
-    app.register_blueprint(main_blueprint)
-    return app
+        print (uid)
+
+    res = http_filter.before_request(request_url, url, uid, header)
+    if str(res) == 'true':
+        pass
+    else:
+        return res
+
+# @beforeLogin.before_request
+# def test():
+#     header = request.headers
+#     test=header['test']
+#     tes=json.loads(test)
+#     print(tes['username'])
 
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
-
-manager = Manager(app)
-migrate = Migrate(app, db)
 
 
-def make_shell_context():
-    return dict(app=app, db=db)
-manager.add_command("shell",Shell(make_context=make_shell_context))
-manager.add_command('db', MigrateCommand)
-manager.add_command("runserver", Server('0.0.0.0', port=port))
 
-if __name__ == '__main__':
-    manager.run()
+
+app = Flask(__name__)
+app.config.from_mapping(config.sqlalchemy_set)
+app.debug=False
+app.logger.addHandler(file_handle())
+CORS(app, supports_credentials=True)
+app.register_blueprint(logged)
+app.register_blueprint(beforeLogin)
+app.register_blueprint(server)
+for i,val in enumerate(app.url_map._rules):
+    # print(i)
+    print(val)
+    # print(val.endpoint)
+    test=str(val.endpoint).split('.')
+    if len(test)>1:
+
+        print(test[1])
+
+
+
+

@@ -2,6 +2,7 @@
 from flask import jsonify
 import pika
 import json
+import requests
 
 class Message(object):
     @staticmethod
@@ -26,3 +27,28 @@ class Message(object):
         channel.basic_publish(exchange=exchange, routing_key=routing_key, body=json.dumps(message))
         # print "dd"
         connection.close()
+
+    @staticmethod
+    def post_json_request(url, post_data, header_type):
+        error = None
+        if int(header_type) == 1:
+            headers = {
+                'content-type': "application/x-www-form-urlencoded"
+            }
+        elif int(header_type) == 2:
+            headers = {
+                'content-type': "application/json"
+            }
+            post_data = json.dumps(post_data)
+        try:
+
+            response = requests.post(url, data=post_data, headers=headers,time_out=10)
+            print (response)
+
+        except requests.exceptions.ConnectTimeout:
+            # return "time out"
+            return error
+        except requests.exceptions.ConnectionError:
+            return error
+        res_data = response.text
+        return res_data
