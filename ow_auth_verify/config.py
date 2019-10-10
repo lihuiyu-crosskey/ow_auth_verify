@@ -14,9 +14,6 @@ if check=='local':
     access_token_expire = 3600
     refresh_token_expire = 2592000
     port=5556
-    auth_verify_url = "http://192.168.1.204:5555"
-    request_url = auth_verify_url+"/auth_verify/power/verify"
-    sms_url="http://ysms.game2palm.com:8899/smsAccept/sendSms.action"
     db_set = {'name': 'root', 'password': 'ZTkj2018!', 'host': '192.168.1.203', 'port': '3306', 'db': 'zt_auth'}
     redis_set={'host':'192.168.1.203','port':'6379','db':'15'}
 
@@ -24,9 +21,6 @@ elif check=='online':
     access_token_expire = 3600
     refresh_token_expire = 2592000
     port=5556
-    auth_verify_url="http://192.168.1.202:3306"
-    sms_url = "http://ysms.game2palm.com:8899/smsAccept/sendSms.action"
-    request_url = auth_verify_url+"/auth_verify/power/verify"
     db_set = {'name': 'root', 'password': 'Admin123456!', 'host': '39.100.138.101', 'port': '3306',
               'db': 'ow_auth'}
     redis_set = {'host': '39.100.138.101', 'port': '6379', 'password': 'admin123!', 'db': '0'}
@@ -35,9 +29,6 @@ elif check=='test':
     access_token_expire = 3600
     refresh_token_expire = 2592000
     port=5556
-    auth_verify_url = "http://192.168.1.204:5555"
-    sms_url = "http://ysms.game2palm.com:8899/smsAccept/sendSms.action"
-    request_url = auth_verify_url+"/auth_verify/power/verify"
     db_set = {'name': 'root', 'password': 'ZTkj2018!', 'host': '192.168.1.203', 'port': '3306', 'db': 'auth_test'}
     redis_set = {'host': '192.168.1.203', 'port': '6379', 'password': 'admin123!', 'db': '15'}
 
