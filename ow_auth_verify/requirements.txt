@@ -12,7 +12,7 @@ Jinja2==2.9.6
 MySQL-python==1.2.3
 PyYAML==3.12
 redis==2.10.5
-requests==2.13.0
+requests==2.20.0
 SQLAlchemy==1.1.9
 typing==3.5.3.0
 virtualenv==15.1.0
