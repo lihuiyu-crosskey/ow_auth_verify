@@ -19,4 +19,14 @@ def power_verify():
         current_app.logger.error(e)
         return Message.json_mess(400, "参数错误", "")
 
+@server.route('/apis/save', methods=['POST'],endpoint='添加所有服务的接口权限')
+def save_my_apis():
+    try:
+        req=request.get_json()
+        data = server_ser.save_my_apis(req['apis'])
+        return data
+    except Exception as e:
+        current_app.logger.error(e)
+        return Message.json_mess(400, "参数错误", "")
+
 

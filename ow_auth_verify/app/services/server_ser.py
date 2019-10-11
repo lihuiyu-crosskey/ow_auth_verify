@@ -8,7 +8,7 @@ import ast
 from flask import current_app
 import string, random
 import manage
-
+import threading
 
 
 #权限验证
@@ -106,8 +106,8 @@ WHERE a.role_id=%s AND d.power_code=%s limit 1"""
 
 def header_check(head):
     try:
-        funkiSystem = head['funkiSystem']
-        check_sys=['iOSFunki','androidFunki','OPS','AgentPlatform','AndroidVRAPP','serverFunki']
+        funkiSystem = head['OperationPlatform']
+        check_sys=['iOS','Android','Web','Backstage']
         if funkiSystem in check_sys:
             if funkiSystem != 'serverFunki':
                 softwareName = head['softwareName']
@@ -140,6 +140,35 @@ def header_check(head):
         return False
 
 
+def save_my_apis(apis):
+    my_thread=threading.Thread(target=save_api, args=(apis,))
+    my_thread.start()
+    return Message.json_mess(0,'添加成功','')
+
+
+def save_api(apis):
+    try:
+        manage.cur.reconnect()
+        for api in apis:
+            power_code=api['power_code']
+            power_name=api['power_name']
+            power_mark=api['power_mark']
+            sql='select * from tab_power where power_code=%s limit 1'
+            check=manage.cur.get(sql,power_code)
+            print(check)
+            if check:
+                pass
+            else:
+                sql="insert into tab_power(power_name,power_code,type,power_mark) values (%s,%s,1,%s)"
+                check=manage.cur.execute(sql,power_name,power_code,power_mark)
+                print(check)
+
+        return 0
+    except Exception as e:
+        current_app.logger.error(str(e))
+        return 1
+    finally:
+        manage.cur.close()
 
 
 
